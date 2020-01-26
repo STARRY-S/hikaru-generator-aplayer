@@ -1,0 +1,25 @@
+{
+  "name": "hikaru-generator-aplayer",
+  "version": "1.0.0",
+  "description": "APlayer music player for Hikaru.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/STARRY-S/hikaru-generator-aplayer.git"
+  },
+  "keywords": [
+    "Hikaru",
+    "plugin",
+    "Generator",
+    "APlayer"
+  ],
+  "author": "STARRY-S",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/STARRY-S/hikaru-generator-aplayer/issues"
+  },
+  "homepage": "https://github.com/STARRY-S/hikaru-generator-aplayer#readme"
+}
