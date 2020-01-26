@@ -83,7 +83,6 @@ module.exports = (hikaru) => {
                 }
 
                 p['content'] = `${p['content'].slice(0, pos)} ${aplayer} ${p['content'].slice(p['content'].indexOf("-->", pos)+3)}`
-                console.log(objects)
                 if (p['excerpt'] && pos < p['excerpt'].length) {
                     p['excerpt'] = `${p['excerpt'].slice(0, pos)} ${aplayer} ${p['excerpt'].slice(p['excerpt'].indexOf("-->", pos)+3)}`
                 }
