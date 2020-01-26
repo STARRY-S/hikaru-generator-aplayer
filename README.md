@@ -6,8 +6,6 @@ A music player plugin based on [APlayer](https://github.com/MoePlayer/APlayer) f
 
 # Usage
 
-## Quick Start
-
 ``` json
 <!--aplayer
 {
@@ -47,7 +45,7 @@ A music player plugin based on [APlayer](https://github.com/MoePlayer/APlayer) f
 
 # Fixed mode & Mini mode
 
-Add `"fixed": "true"` to enable Fixed mode and '"mini": "false"' to enable mini mode.
+Add `"fixed": "true"` to enable Fixed mode and `"mini": "false"` to enable mini mode.
 
 The default value is `false`.
 
@@ -58,3 +56,10 @@ Most of [these Options](https://aplayer.js.org/#/home?id=options) are supported.
 # CDN
 
 CDN provided by [cdnjs](https://cdnjs.com/libraries/aplayer).
+
+You can edit CDN at `index.js`:
+
+```
+const APLAYER_STYLE_LITERAL = `<link href="LINK_FOR_APlayer.min.css" rel="stylesheet">`
+const APLAYER_SCRIPT_LITERAL = `<script src= "LINK_FOR_APlayer.min.js"></script>`
+```
