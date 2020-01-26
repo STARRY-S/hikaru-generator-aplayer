@@ -8,6 +8,8 @@ A music player plugin based on [APlayer](https://github.com/MoePlayer/APlayer) f
 
 # Usage
 
+`npm install --save hikaru-generator-aplayer`
+
 ``` json
 <!--aplayer
 {
