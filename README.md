@@ -1,7 +1,9 @@
-Hikaru Generator APlayer
+# Hikaru Generator APlayer
+
 ======================
 
-A music player plugin based on [APlayer](https://github.com/MoePlayer/APlayer) for Hikaru.
+A music player plugin based on [APlayer](https://github.com/MoePlayer/APlayer) for [Hikaru](https://github.com/AlynxZhou/hikaru).
+
 ------------------
 
 # Usage
@@ -16,6 +18,7 @@ A music player plugin based on [APlayer](https://github.com/MoePlayer/APlayer) f
 }
 -->
 ```
+
 ## Music List & Lyrics
 
 ``` json
@@ -30,7 +33,7 @@ A music player plugin based on [APlayer](https://github.com/MoePlayer/APlayer) f
         "artist":"artist1",
         "url":"url1.mp3",
         "cover":"cover1.jpg",
-        "lrc": "[00:00.00]APlayer\n[00:04.01]is\n[00:08.02]amazing"
+        "lrc": "[00:00.00]APlayer[00:04.01]is[00:08.02]amazing"
     },
     {
         "theme": "#F57F17",
@@ -51,13 +54,13 @@ The default value is `false`.
 
 # Options
 
-Most of [these Options](https://aplayer.js.org/#/home?id=options) are supported.
+For more descriptions please refer to [APlayer Official Documents](https://aplayer.js.org/#/home?id=options).
 
 # CDN
 
 CDN provided by [cdnjs](https://cdnjs.com/libraries/aplayer).
 
-You can edit CDN at `index.js`:
+You can change CDN at `index.js`:
 
 ```
 const APLAYER_STYLE_LITERAL = `<link href="LINK_FOR_APlayer.min.css" rel="stylesheet">`
