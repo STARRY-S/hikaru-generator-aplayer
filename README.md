@@ -1,7 +1,5 @@
 # Hikaru Generator APlayer
 
-======================
-
 A music player plugin based on [APlayer](https://github.com/MoePlayer/APlayer) for [Hikaru](https://github.com/AlynxZhou/hikaru).
 
 ------------------
