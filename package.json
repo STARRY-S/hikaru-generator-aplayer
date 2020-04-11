@@ -1,6 +1,6 @@
 {
   "name": "hikaru-generator-aplayer",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "APlayer music player for Hikaru.",
   "main": "index.js",
   "scripts": {
