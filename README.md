@@ -6,8 +6,6 @@ A music player plugin based on [APlayer](https://github.com/MoePlayer/APlayer) f
 
 # Usage
 
-`npm install --save hikaru-generator-aplayer`
-
 ``` json
 <!--aplayer
 {
@@ -52,17 +50,21 @@ Add `"fixed": "true"` to enable Fixed mode and `"mini": "false"` to enable mini 
 
 The default value is `false`.
 
-# Options
+# APlayer Options
 
 For more descriptions please refer to [APlayer Official Documents](https://aplayer.js.org/#/home?id=options).
 
-# CDN
+# Custom CDN
 
-CDN provided by [cdnjs](https://cdnjs.com/libraries/aplayer).
+The default CDN is provided by [cdnjs](https://cdnjs.com/libraries/aplayer) (version: 1.10.1).
 
-You can change CDN at `index.js`:
+Add following to your `siteConfig.yml` for custom CDN links.
 
-```
-const APLAYER_STYLE_LITERAL = `<link href="LINK_FOR_APlayer.min.css" rel="stylesheet">`
-const APLAYER_SCRIPT_LITERAL = `<script src= "LINK_FOR_APlayer.min.js"></script>`
+``` yaml
+aplayer:
+  enable: true
+  cdn:
+    style: "https://link_to_your/APlayer.min.css"
+    script: "https://link_to_your/APlayer.min.js"
+
 ```

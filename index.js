@@ -2,10 +2,20 @@ const fs = require('fs')
 const path = require('path')
 module.exports = (hikaru) => {
     hikaru.generator.register('aplayer', (site) => {
-        const APLAYER_STYLE_LITERAL = `<link href="https://cdnjs.cloudflare.com/ajax/libs/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">`
-        const APLAYER_SCRIPT_LITERAL = `<script src= "https://cdnjs.cloudflare.com/ajax/libs/aplayer/1.10.1/APlayer.min.js"></script>`
+        if (site['siteConfig']['aplayer']) {
+            if (!site['siteConfig']['aplayer']['enable']) {
+                return
+            }
+        }
+        var APLAYER_STYLE_LITERAL = `<link href="https://cdnjs.cloudflare.com/ajax/libs/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">`
+        var APLAYER_SCRIPT_LITERAL = `<script src= "https://cdnjs.cloudflare.com/ajax/libs/aplayer/1.10.1/APlayer.min.js"></script>`
         const APLAYER_DEFAULT_THEME = `#33363b`
         // const all = "site['posts'].concat(site['pages'])"
+        const config = site['siteConfig']['aplayer']
+        if (config['cdn']) {
+            APLAYER_STYLE_LITERAL = `<link href="${config['cdn']['style']}" rel="stylesheet">`
+            APLAYER_SCRIPT_LITERAL = `<script src= "${config['cdn']['script']}"></script>`
+        }
 
         for (const p of site['posts'].concat(site['pages'])) {
             if (p['content'] && p['content'].includes("<!--aplayer")) {
@@ -89,6 +99,5 @@ module.exports = (hikaru) => {
                 apnum++;
             }
         }
-
     })
 }
