@@ -46,7 +46,8 @@ A music player plugin based on [APlayer](https://github.com/MoePlayer/APlayer) f
 
 # Fixed mode & Mini mode
 
-Add `"fixed": "true"` to enable Fixed mode and `"mini": "false"` to enable mini mode.
+Add `"fixed": "true"` to enable Fixed mode;
+Add `"mini": "true"` to enable mini mode.
 
 The default value is `false`.
 
