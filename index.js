@@ -1,5 +1,6 @@
 const fs = require('fs')
 const path = require('path')
+const { title } = require('process')
 module.exports = (hikaru) => {
     hikaru.generator.register('aplayer', (site) => {
         if (site['siteConfig']['aplayer']) {
@@ -27,69 +28,81 @@ module.exports = (hikaru) => {
             var apnum = 0;
             for (var pos = p['content'].indexOf("<!--aplayer"); pos !== -1; pos = p['content'].indexOf("<!--aplayer")) {
                 var objstr = p['content'].slice(pos+11, p['content'].indexOf('-->', pos))
-                var objects = JSON.parse(objstr)
+                try {
+                    var objects = JSON.parse(objstr)
+                } catch(e) {
+                    hikaru.logger.warn(`[APlayer] Parse JSON failed in post: ${p['title']}`)
+                    hikaru.logger.warn(`[APlayer] ${objstr}`)
+                    hikaru.logger.warn(`[APlayer] Please check the JSON syntax and retry.`)
+                    hikaru.logger.error(e)
+                    process.exit(-1)
+                    return;
+                }
 
-                if (objects['audio'] !== undefined) {
-                    var aplayer = `
-                    <div id="aplayer${apnum}"></div>
-                    <script>
-                    const ap${apnum} = new APlayer ({
-                        container: document.getElementById("aplayer${apnum}"),
-                        theme: "${APLAYER_DEFAULT_THEME}",
-                        fixed: ${objects['fixed'] || false},
-                        listFolded: ${objects["listFolded"] || false},
-                        listMaxHeight: ${objects["listMaxHeight"] || false},
-                        lrcType: ${objects["lrcType"] || false},
-                        mini: ${objects["mini"] || false},
-                        volume: ${objects['volume'] || 0.7},
-                        order: "${objects['order'] || "list"}",
-                        loop: "${objects['loop'] || "all"}",
-                        autoplay: ${objects['autoplay'] || false},
-                        audio: [`
+                if (objects['audio'] !== undefined) {   // Multi musics with/without lyrics.
+                    var aplayer = 
+                        `<!--APlayer-->\n<div id="aplayer${apnum}" style="color:#222"></div>`
+                        + `\n<script>`
+                        + `\nconst ap${apnum} = new APlayer ({`
+                        + `\n    container: document.getElementById("aplayer${apnum}"),`
+                        + `\n    theme: "${APLAYER_DEFAULT_THEME}",`
+                        + `\n    fixed: ${objects['fixed'] || false},`
+                        + `\n    listFolded: ${objects["listFolded"] || false},`
+                        + `\n    listMaxHeight: ${objects["listMaxHeight"] || false},`
+                        + `\n    lrcType: ${objects["lrcType"] || false},`
+                        + `\n    mini: ${objects["mini"] || false},`
+                        + `\n    volume: ${objects['volume'] || 0.7},`
+                        + `\n    order: "${objects['order'] || "list"}",`
+                        + `\n    loop: "${objects['loop'] || "all"}",`
+                        + `\n    autoplay: ${objects['autoplay'] || false},`
+                    + `\n    audio: [`
 
                     for (const q of objects['audio']) {
-                        aplayer += `
-                        {
-                            name: "${q['name']}",
-                            artist: "${q['artist']}",
-                            url: "${q['url']}",
-                            cover: "${q['cover']}",
-                            theme: "${q['theme'] || ""}",
-                            lrc: "${q['lrc'] || false}"
-                        },`;
+                        aplayer += 
+                        `{`
+                        + `\n    name: "${q['name']}",`
+                        + `\n    artist: "${q['artist']}",`
+                        + `\n    url: "${q['url']}",`
+                        + `\n    cover: "${q['cover']}",`
+                        + `\n    theme: "${q['theme'] || ""}",`
+                        + `\n    lrc: "${q['lrc'] || false}"`
+                        + `\n},`;
                     }
                     aplayer = aplayer.slice(0, aplayer.length-1)
-                    aplayer +=
-                    `]
-                });
-                </script>`
+                    aplayer +=`]\n});\n</script>`
 
                 } else {
-                    var aplayer = `
-                    <div id="aplayer${apnum}"></div>
-                    <script>
-                    const ap${apnum} = new APlayer ({
-                        container: document.getElementById("aplayer${apnum}"),
-                        theme: "${APLAYER_DEFAULT_THEME}",
-                        fixed: ${objects['fixed'] || false},
-                        listFolded: ${objects["listFolded"] || false},
-                        listMaxHeight: ${objects["listMaxHeight"] || false},
-                        lrcType: ${objects["lrcType"] || false},
-                        mini: ${objects["mini"] || false},
-                        volume: ${objects['volume'] || 0.7},
-                        order: "${objects['order'] || "list"}",
-                        loop: "${objects['loop'] || "all"}",
-                        autoplay: ${objects['autoplay'] || false},
-                        audio: [{
-                            name: "${objects['name']}",
-                            artist: "${objects['artist']}",
-                            url: "${objects['url']}",
-                            cover: "${objects['cover']}",
-                            lrc: "${objects['lrc'] || ""}",
-                            theme: "${objects['theme'] || ""}"
-                        }]
-                    });
-                    </script>`
+                    if (objects['lrc'] === undefined) {     // Single music without lyrics, can changed to dark mode.
+                        var aplayer = 
+                            `<!--APlayer-->\n<div id="aplayer${apnum}" style="background: var(--color-main-background)"></div>`
+                    } else {    // Single music with lyrics.
+                        var aplayer = 
+                            `<!--APlayer-->\n<div id="aplayer${apnum}" style="color:#222"></div>`
+                    }
+                    aplayer +=
+                        `\n<script>`
+                        + `\nconst ap${apnum} = new APlayer ({`
+                        + `\n    container: document.getElementById("aplayer${apnum}"),`
+                        + `\n    theme: "${APLAYER_DEFAULT_THEME}",`
+                        + `\n    fixed: ${objects['fixed'] || false},`
+                        + `\n    listFolded: ${objects["listFolded"] || false},`
+                        + `\n    listMaxHeight: ${objects["listMaxHeight"] || false},`
+                        + `\n    lrcType: ${objects["lrcType"] || false},`
+                        + `\n    mini: ${objects["mini"] || false},`
+                        + `\n    volume: ${objects['volume'] || 0.7},`
+                        + `\n    order: "${objects['order'] || "list"}",`
+                        + `\n    loop: "${objects['loop'] || "all"}",`
+                        + `\n    autoplay: ${objects['autoplay'] || false},`
+                        + `\n    audio: [{`
+                        + `\n        name: "${objects['name']}",`
+                        + `\n        artist: "${objects['artist']}",`
+                        + `\n        url: "${objects['url']}",`
+                        + `\n        cover: "${objects['cover']}",`
+                        + `\n        lrc: "${objects['lrc'] || ""}",`
+                        + `\n        theme: "${objects['theme'] || ""}"`
+                        + `\n    }]`
+                        + `\n});`
+                        + `\n</script>`
                 }
 
                 p['content'] = `${p['content'].slice(0, pos)} ${aplayer} ${p['content'].slice(p['content'].indexOf("-->", pos)+3)}`
